@@ -14,15 +14,32 @@ export default defineConfig([
       "!**/eslint.config.js",
     ],
   },
+
   {
-    files: ["**/*.{js,mjs,cjs,jsx}"],
-    plugins: { js },
-    extends: ["js/recommended"],
+    files: ["**/*.{js,jsx}"],
+    languageOptions: {
+      ecmaVersion: "latest",
+      sourceType: "module",
+      globals: globals.browser,
+      parserOptions: {
+        ecmaFeatures: { jsx: true },
+      },
+    },
+    extends: [js.configs.recommended],
+    plugins: {
+      react: pluginReact,
+    },
+    rules: {
+      "no-unused-vars": "warn",
+      "no-undef": "warn",
+    },
+    settings: {
+      react: {
+        version: "detect",
+      },
+    },
   },
-  {
-    files: ["**/*.{js,mjs,cjs,jsx}"],
-    languageOptions: { globals: globals.browser },
-  },
-  pluginReact.configs.flat.recommended,
+
   eslintConfigPrettier,
 ]);
+
